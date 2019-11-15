@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import { Link } from 'react-router-dom'
 import Axios from "axios";
 
 const Login = () => {
@@ -19,7 +20,6 @@ const Login = () => {
     Axios.post('http://localhost:5000/api/login',user)
     .then(res => {
       const red = res.data
-      console.log(red)
       sessionStorage.setItem('token', red.payload)
       setIsLoggedIn(true)        
     })
@@ -50,6 +50,10 @@ const Login = () => {
             onChange={handleChange}
           />
           <button>Log in</button>
+          <Link to='/protected'>
+            look at Bubbles
+          </Link>
+          
         </form>
     </>
   );
