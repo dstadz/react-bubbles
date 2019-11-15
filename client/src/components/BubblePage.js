@@ -20,7 +20,7 @@ const BubblePage = () => {
   // set that data to the colorList state property
   const getData = () => {
     axios.get(`http://localhost:5000/api/colors`, {
-      headers: {authorization:  window.localStorage.getItem('token')}
+      headers: {authorization:  sessionStorage.getItem('token')}
     })
     .then(res => {
       console.log(res)
