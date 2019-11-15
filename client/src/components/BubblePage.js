@@ -34,7 +34,7 @@ const BubblePage = () => {
     getData();
     if(!sessionStorage.getItem('token')) console.log('you need to log in')
     else console.log('you are in')
-  },[colorList])
+  },[colorList.length])
 
   return (
     <>

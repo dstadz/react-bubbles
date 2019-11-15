@@ -13,11 +13,11 @@ export default function PrivateRoute ({ children, ...rest}) {
         isAuthenticated() 
         ? (children)
         : (<Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location }
-            }}
-          />)
+          to={{
+            pathname: "/login",
+            state: { from: location }
+          }}
+        />)
       }
     />
   );

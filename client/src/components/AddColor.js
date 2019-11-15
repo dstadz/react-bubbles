@@ -5,7 +5,6 @@ import ColorList from './ColorList';
 
 
 const AddColor = props => {
-  console.log(props)
   const [newColor, setNewColor] = useState({
     color:'',
     code:'',
@@ -14,9 +13,7 @@ const AddColor = props => {
   const changeHandler = ev => {
     ev.persist();
     let value = ev.target.value;
-    if (ev.target.name === 'price') {
-      value = parseInt(value, 10);
-    }
+
 
     setNewColor({
       ...newColor,
@@ -26,9 +23,19 @@ const AddColor = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    axios.post('http://localhost:5000/api/colors',
-    {headers: {authorization: sessionStorage.getItem('token')}},
-    newColor)
+    axios({
+      method: 'post',
+      url:`http://localhost:5000/api/colors`, 
+      headers: {authorization: sessionStorage.getItem('token')},
+      data:{
+        color: newColor.color,
+        code: newColor.code
+      }
+    })
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err))
+
+
   };
 
   return (
@@ -37,17 +44,17 @@ const AddColor = props => {
       <form onSubmit={handleSubmit} >
       <input
           type="string"
-          name="code"
+          name="color"
           onChange={changeHandler}
-          placeholder="#"
-          value={newColor.code}
+          placeholder="Color"
+          value={newColor.color}
         />
         <input
         type="string"
-        name="color"
+        name="code"
         onChange={changeHandler}
-        placeholder="#"
-        value={newColor.color}
+        placeholder="#000000"
+        value={newColor.code}
       />
 
         <button className="md-button form-button">Add New Item</button>
