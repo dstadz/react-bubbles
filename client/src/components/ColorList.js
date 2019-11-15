@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import axiosWithAuth from './BubblePage'
 
 const initialColor = {
   color: "",
@@ -10,27 +11,60 @@ const ColorList = ({ colors, updateColors }) => {
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
+
+//  useEffect(() => {
+   
+//    return () => {
+     
+//    };
+//  }, [colorToEdit])
+
+
   const editColor = color => {
     setEditing(true);
+    console.log(color)
     setColorToEdit(color);
   };
 
   const saveEdit = e => {
     e.preventDefault();
+    setEditing(false);
+    
+    console.log(colorToEdit)
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
+    axios({
+      method: 'put',
+      url:`http://localhost:5000/api/colors/${colorToEdit.id}`, 
+      headers: {authorization: sessionStorage.getItem('token')},
+      data:{
+        color: colorToEdit.color,
+        code: colorToEdit.code
+      }
+    })
+    .then(res => {
+      console.log(res.data)
+      updateColors(res.data)
+    })
+    .catch(err => console.log(err))
   };
 
+
+
+
+
+
+
   const deleteColor = color => {
-    console.log(color)
+    //console.log(color)
     // make a delete request to delete this color
     axios.delete(`http://localhost:5000/api/colors/${color.id}`, 
     {headers: {authorization: sessionStorage.getItem('token')}})
     axios.get(`http://localhost:5000/api/colors`,
     {headers: {authorization: sessionStorage.getItem('token')}})
     .then(res => {
-      console.log(res.data)
+      //console.log(res.data)
       updateColors(res.data)
     })
     .catch(err => console.log(err))
@@ -47,7 +81,7 @@ const ColorList = ({ colors, updateColors }) => {
                 e.stopPropagation();
                 deleteColor(color)
               }}> x </span> 
-              
+
               {" "} {color.color}
             </span>
 

@@ -3,9 +3,10 @@ import axios from "axios";
 
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
+import AddColor from './AddColor'
 
 
-const axiosWithAuth = () => {
+ export const axiosWithAuth = () => {
   return axios.create({
     headers: {
       authorization: sessionStorage.getItem('token")')
@@ -33,13 +34,14 @@ const BubblePage = () => {
     getData();
     if(!sessionStorage.getItem('token')) console.log('you need to log in')
     else console.log('you are in')
-  },[])
+  },[colorList])
 
   return (
     <>
     <h1>You are on the BubblePage</h1> 
+      <AddColor colors={colorList} updateColors={setColorList} />
       <ColorList colors={colorList} updateColors={setColorList} />
-      <Bubbles colors={colorList} />
+      <Bubbles colors={colorList} updateColors={setColorList} />
     </>
   );
 };
