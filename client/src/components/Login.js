@@ -4,14 +4,15 @@ import Axios from "axios";
 const Login = () => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
-  const [user,setUser] = useState({
+  const [user, setUser] = useState({
     username:'Lambda School',
     password:'i<3Lambd4'
   })
   const [isLoggedIn,setIsLoggedIn] = useState(false)
 
-  handleChange = e => {
-    setUser({e.target.name: e.target.value})
+  const handleChange = e => {
+    console.log(e.target.value)
+    setUser(e.target.value)
   }
   const login = e => {
     e.preventDefault();
@@ -19,7 +20,7 @@ const Login = () => {
     .then(res => {
       const red = res.data
       console.log(red)
-      sessionStorage.setItem('token', red)
+      sessionStorage.setItem('token', red.payload)
       setIsLoggedIn(true)        
     })
     .catch(err => console.log(err))  
