@@ -7,7 +7,7 @@ const isAuthenticated = () => {
 
 export default function PrivateRoute ({ children, ...rest}) {
   console.log("...rest", rest);
-  console.log("...rest", rest);
+  console.log("...chidren", children);
   return (
     <Route
       {...rest}
